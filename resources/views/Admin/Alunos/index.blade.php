@@ -1,5 +1,5 @@
 @extends('layout.site')
-@section('titulo','Cursos')
+@section('titulo','Alunos')
 @section('conteudo')
 
 <style>
@@ -32,14 +32,15 @@
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .modern-table th {
-        background-color: #f5f5f5;
-        color: #333;
-        padding: 12px;
-        text-align: left;
-        font-weight: 600;
-        border-bottom: 2px solid #ddd;
-    }
+   .modern-table th {
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+
 
     .modern-table td {
         padding: 12px;
@@ -48,7 +49,7 @@
     }
 
     .modern-table tr:hover {
-        background-color: #f9f9f9;
+        background-color: #f1f8f4;
     }
 
     .img-thumb {
@@ -72,7 +73,7 @@
 </style>
 
 <div class='container'>
-    <h3 class='center'>Lista de Cursos</h3>
+    <h3 class='center'>Lista de Alunos</h3>
 
     @if(session('success'))
         <div class="card-panel green lighten-4 green-text text-darken-4">{{ session('success') }}</div>
@@ -81,24 +82,22 @@
     <div class="table-container">
         <table class="modern-table">
             <thead>
-                <tr>  
+                <tr>
                     <th>Id</th>
-                    <th>Título</th>
-                    <th>Descrição</th>
-                    <th>Publicado</th>
-                    <th>Valor</th>
+                    <th>Nome</th>
+                    <th>Celular</th>
+                    <th>Curso</th>
                     <th>Imagem</th>
                     <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($rows as $row)  
+                @foreach($rows as $row)
                     <tr>
                         <td>{{ $row->id }}</td>
-                        <td>{{ $row->titulo }}</td>
-                        <td>{{ $row->descricao }}</td>
-                        <td>{{ $row->publicado }}</td>
-                        <td>R$ {{ number_format($row->valor, 2, ',', '.') }}</td>
+                        <td>{{ $row->nome }}</td>
+                        <td>{{ $row->celular }}</td>
+                        <td>{{ $row->curso->titulo ?? 'N/A' }}</td>
                         <td>
                             @if($row->imagem)
                                 <img class="img-thumb" src="{{ asset($row->imagem) }}" alt="{{ $row->titulo }}">
@@ -108,18 +107,18 @@
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <a class='btn btn-green btn-action' href="{{ route('admin.cursos.editar',$row->id) }}">Alterar</a>
-                                <a class='btn red btn-action' href="{{ route('admin.cursos.excluir',$row->id) }}" onclick="return confirm('Confirma exclusão?')">Excluir</a>
+                                <a class="btn btn-green btn-action" href="{{ route('admin.alunos.editar', $row->id) }}">Alterar</a>
+                                <a class="btn red btn-action" href="{{ route('admin.alunos.excluir', $row->id) }}" onclick="return confirm('Confirma exclusão?')">Excluir</a>
                             </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
-        </table>   
+        </table>
     </div>
 
-    <div class="row center-btn"> 
-        <a class='btn btn-green' href="{{ route('admin.cursos.adicionar') }}">Adicionar Curso</a>
+    <div class="row center-btn">
+        <a class="btn btn-green" href="{{ route('admin.alunos.adicionar') }}">Adicionar Aluno</a>
     </div>
 </div>
 @endsection
